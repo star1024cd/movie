@@ -1,4 +1,4 @@
-import { searchMovies, goodMovies } from '/search.js';
+import { searchMovies, goodMovies } from '/movie/search.js';
 
 export let movieDataList = [];
 export let posterBasePath = '';
