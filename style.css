@@ -17,11 +17,14 @@ body {
 
 /* 검색창 */
 #search-input {
-  width: 310px;
-  margin-right: 10px;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px;
+  border: 0;
+  border-bottom: 2px solid #000;
+  padding: 12px;
+  font-size: 16px;
+  width: 250px;
+  margin: 10px 0;
+  outline: none;
+  transition: border-color 0.3s ease;
 }
 /* 버튼 컨테이너 */
 .btn-container {
@@ -30,11 +33,20 @@ body {
 }
 
 .btn{
-  margin: 2px;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #000;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+.btn:hover {
+  background-color: #fff;
+  color: #000;
+}
 #movie-list {
   padding: 20px;
   border-radius: 10px;
@@ -76,12 +88,11 @@ body {
 /* title */
 h2 { 
   font-weight: bold;
-  background-color: rgba(227, 227, 227, 0.829);
+  background-color: #D3D3D3;
   margin-top: 0;
   margin-bottom: 0;
   padding: 5px;
   height: 70px;  
-
   display: flex;
   align-items: center; 
   justify-content: center; 
@@ -94,7 +105,7 @@ h2 {
 }
 /* rating */
 .movie-rating {
-  background-color: rgba(227, 227, 227, 0.829);
+  background-color: #D3D3D3 ;
   margin-top: auto;
   margin-bottom: 0;
   padding: 5px;
