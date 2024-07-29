@@ -1,5 +1,5 @@
 // 영화 검색
-import { movieDataList, appendMovies } from './movie.js';
+import { movieDataList, appendMovies } from '/movie/movie.js';
 
 export function searchMovies() {
     const searchKeyword = document.getElementById('search-input').value.toLowerCase();
