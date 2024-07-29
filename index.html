@@ -4,10 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MOVIE CO
-    LLECTION</title>
+  <title>MOVIE COLLECTION</title>
+  <link rel="stylesheet" href="/reset.css">
   <link rel="stylesheet" href="/style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <script type="module" src="/movie.js"></script>
+  <script type="module" src="/search.js"></script>
 </head>
 
 <body>
@@ -15,21 +18,21 @@
   <header>
     <h1 id="title">MOVIE COLLECTION</h1>
   </header>
-
   <div class="btn-container">
     <div id="search-container">
       <input type="text" id="search-input" class="form-control" placeholder="영화 제목을 검색해 보세요"></input>
       <button id="return-btn" class="btn">처음으로</button>
-      <button id="search-btn" class="btn">검색</button>
-      <button id="serach-goodMovie" class="categoryBtn btn">8.6점 이상</button>
+      <!--<button id="search-btn" class="btn">검색</button>  -->    
+      <button id="search-goodMovie" class="categoryBtn btn">8.6점 이상</button>
     </div>
-    <div id="category-container">
-      
-    </div>
+    <!-- <div id="category-container">      
+      <button id="search-movieEn" class="categoryBtn btn">미국</button>
+      <button id="search-movieJa" class="categoryBtn btn">일본</button>
+      <button id="search-movieEs" class="categoryBtn btn">스페인</button>
+    </div> -->
   </div>
   <section id="movie-list">
   </section>
-  <script src="/movie.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,8 @@
-let movieDataList = [];
-let posterBasePath = '';
-let posterSize = '';
+import { searchMovies, goodMovies } from './search.js';
+
+export let movieDataList = [];
+export let posterBasePath = '';
+export let posterSize = '';
 
 // 영화 정보 가져오기 (이미지 경로, 제목, 개요, 평점)
 const options = {
@@ -24,10 +26,14 @@ const details = {
 async function fetchMovies() {
 
   // API 호출
-  const [movieMain, movieDetails] = await Promise.all([
-    fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options),
-    fetch('https://api.themoviedb.org/3/configuration', details)
-  ]);
+  // const [movieMain, movieDetails] = await Promise.all([
+  //   fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options),
+  //   fetch('https://api.themoviedb.org/3/configuration', details)
+  // ]);
+
+  const movieMain = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
+  const movieDetails = await fetch('https://api.themoviedb.org/3/configuration', details);
+
   // JSON으로 변환
   const movieDataMain = await movieMain.json();
   const movieDataDetail = await movieDetails.json();
@@ -36,23 +42,26 @@ async function fetchMovies() {
   movieDataList = movieDataMain.results;
   posterBasePath = movieDataDetail.images.base_url;
   posterSize = movieDataDetail.images.poster_sizes[3];
+  console.log(movieDataMain);
   console.log(movieDataDetail);
   appendMovies(movieDataList);
 }
 // HTML 생성 함수
 
-function appendMovies(movies) {
+export function appendMovies(movies) {
   let temp_html = '';
   movies.forEach(movie => {
     const posterFilePath = movie.poster_path;
     const movieTitle = movie.title;
     const movieOverview = movie.overview;
     const movieRating = parseFloat(movie.vote_average.toFixed(1));
+    const movieRelease = movie.release_date;
     const movieId = movie.id;
+    const movieLang = movie.original_language;
     const posterAllPath = posterBasePath + posterSize + posterFilePath;
 
     temp_html += `
-        <div class="card-container" id="movie-card" data-movieIdData="${movieId}" style="width: 18rem;">
+        <div class="card-container" id="movie-card" data-movieIdData="${movieId}" data-movieLang="${movieLang}" style="width: 18rem;">
           <img src="${posterAllPath}" class="movie-img" alt="영화 포스터">
           <h2 class="movie-title">${movieTitle}</h2>
           <p class="movie-overview">${movieOverview}</p>
@@ -67,22 +76,22 @@ function appendMovies(movies) {
 document.addEventListener('DOMContentLoaded', function () {
   fetchMovies();
 
-  // 검색
-  document.getElementById('search-btn').addEventListener('click', function () {
-    searchMovies();
-  });
+  const searchInput = document.getElementById('search-input');
+
   // 실시간 검색
-  document.getElementById('search-input').addEventListener('input', function (event) {
+  searchInput.addEventListener('input', function (event) {
     searchMovies();
   })
   // 평점 상위권
-  document.getElementById('serach-goodMovie').addEventListener('click', function () {
+  document.getElementById('search-goodMovie').addEventListener('click', function () {
     goodMovies();
   });
 
   // 처음화면으로 돌아감
   document.getElementById('return-btn').addEventListener('click', function () {
     fetchMovies();
+    searchInput.value = ''; 
+    searchInput.focus(); 
   });
 
   // 아이디 띄우기
@@ -100,21 +109,3 @@ document.addEventListener('DOMContentLoaded', function () {
   // })
 
 });
-// 영화 검색
-function searchMovies() {
-  const searchKeyword = document.getElementById('search-input').value.toLowerCase();
-  if (searchKeyword === '') {
-    // 검색어가 없으면 전체 영화 리스트 표시
-    console.log("검색어를 입력해주세요.");
-    appendMovies(movieDataList);
-  } else {
-    // 검색어로 필터링
-    const filterMovies = movieDataList.filter(movie => movie.title.toLowerCase().includes(searchKeyword));
-    appendMovies(filterMovies);
-  }
-}
-// 평점 굿 
-function goodMovies() {
-  const filterGoodMovies = movieDataList.filter(movie => parseFloat(movie.vote_average.toFixed(1)) >= 8.6);
-  appendMovies(filterGoodMovies);
-}
